@@ -1,25 +1,36 @@
-# 🏡 Demo-BienesRaices
+# 🏡 Real Estate Demo | Pura Vida Tech
 
-Landing page moderna y responsiva enfocada en bienes raíces en la zona sur de Costa Rica.  
-Desarrollada con **React**, **Vite** y **TailwindCSS**, totalmente adaptable a escritorio y móvil.  
+**Author:** [José Donis Mora Ramírez](https://github.com/Jdmora91)  
+**Company:** [Pura Vida Tech](https://pura-vida-tech.vercel.app)  
+**Location:** Bahía Ballena, Osa – Costa Rica 🇨🇷  
 
-## 🚀 Tecnologías
-- ⚛️ React 18  
-- ⚡ Vite  
-- 🎨 TailwindCSS  
-- 🌍 i18n (Español / Inglés)  
-- ✨ Framer Motion  
+---
 
-## 📸 Características
-- Secciones: Inicio, Zonas, Propiedades, Galería y Contáctenos  
-- Animaciones suaves y diseño moderno  
-- Totalmente responsivo (desktop / mobile)  
-- Preparado para integración con WhatsApp y Chatbot  
+## 🇬🇧 English
 
-## 🌐 Demo
-🔗 [Ver sitio en vivo](https://demo-bienesraices.vercel.app) *(agrega tu link cuando lo subas a Vercel)*  
+### 🌍 Overview
+**Real Estate Demo** is a fully responsive and multilingual website (English, Spanish, French, German, and Portuguese) designed to showcase how a real estate business can present its properties online with a clean, modern, and bilingual user experience.  
+Developed as part of **Pura Vida Tech**, a Costa Rican digital agency specialized in creating smart web solutions for tourism, hospitality, and real estate.
 
-## 📁 Instalación local
+### 🛠️ Tech Stack
+- React + Vite  
+- Tailwind CSS  
+- i18next (multilingual system)  
+- React Router DOM  
+- Framer Motion (animations)  
+- WhatsApp API integration  
+- Responsive Design (Mobile & Desktop)
+
+### ✨ Features
+- Multilingual interface (🇬🇧 🇪🇸 🇫🇷 🇩🇪 🇧🇷)  
+- Hero section with background and gradient  
+- Property listings with images and info  
+- Contact section with WhatsApp integration  
+- Gallery and zones display  
+- Fixed Navbar with scroll animation  
+- Fully optimized for speed and SEO  
+
+### 🚀 Installation
 ```bash
 git clone https://github.com/Jdmora91/Demo-BienesRaices.git
 cd Demo-BienesRaices
