@@ -1,16 +1,27 @@
-# React + Vite
+# 🏡 Demo-BienesRaices
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Landing page moderna y responsiva enfocada en bienes raíces en la zona sur de Costa Rica.  
+Desarrollada con **React**, **Vite** y **TailwindCSS**, totalmente adaptable a escritorio y móvil.  
 
-Currently, two official plugins are available:
+## 🚀 Tecnologías
+- ⚛️ React 18  
+- ⚡ Vite  
+- 🎨 TailwindCSS  
+- 🌍 i18n (Español / Inglés)  
+- ✨ Framer Motion  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📸 Características
+- Secciones: Inicio, Zonas, Propiedades, Galería y Contáctenos  
+- Animaciones suaves y diseño moderno  
+- Totalmente responsivo (desktop / mobile)  
+- Preparado para integración con WhatsApp y Chatbot  
 
-## React Compiler
+## 🌐 Demo
+🔗 [Ver sitio en vivo](https://demo-bienesraices.vercel.app) *(agrega tu link cuando lo subas a Vercel)*  
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📁 Instalación local
+```bash
+git clone https://github.com/Jdmora91/Demo-BienesRaices.git
+cd Demo-BienesRaices
+npm install
+npm run dev
