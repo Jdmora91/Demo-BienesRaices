@@ -36,3 +36,10 @@ git clone https://github.com/Jdmora91/Demo-BienesRaices.git
 cd Demo-BienesRaices
 npm install
 npm run dev
+
+###💼 About
+
+Pura Vida Tech is a Costa Rican brand dedicated to building elegant digital experiences for local and international clients.
+Visit: pura-vida-tech.vercel.app
+
+📧 Contact: jdmora91@gmail.com
