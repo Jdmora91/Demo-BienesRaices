@@ -434,88 +434,105 @@ export default function Propiedades({ language }) {
       </div>
 
       {/* MODAL (sin cambios visuales) */}
-      <AnimatePresence>
-        {open && activeProp && (
-          <motion.div
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center px-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className="bg-gray-950 rounded-3xl w-full max-w-5xl overflow-hidden shadow-2xl border border-gray-800 relative"
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
+   <AnimatePresence>
+  {open && activeProp && (
+    <motion.div
+      className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center px-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        className="bg-gray-950 rounded-3xl w-full max-w-5xl overflow-hidden shadow-2xl border border-gray-800 relative"
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.95, opacity: 0 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      >
+        <div className="grid md:grid-cols-2">
+          {/* 📸 Imagen con X integrada */}
+          <div className="relative">
+            {/* Botón de cerrar, fijo dentro de la imagen */}
+            <button
+              onClick={() => setOpen(false)}
+              className="absolute top-3 right-3 z-20 bg-black/60 text-white text-2xl md:text-xl rounded-full w-10 h-10 flex items-center justify-center hover:bg-black transition duration-200"
             >
-              <button
-                onClick={() => setOpen(false)}
-                className="absolute top-3 right-3 bg-black/70 text-white text-2xl rounded-full w-10 h-10 flex items-center justify-center hover:bg-black transition md:top-4 md:right-4"
+              ✕
+            </button>
+
+            <img
+              src={activeProp.galeria[imgIndex]}
+              alt={activeProp.titulo[language] || activeProp.titulo.es}
+              className="w-full h-[380px] md:h-[500px] object-cover"
+            />
+
+            {/* Flechas de navegación */}
+            {activeProp.galeria.length > 1 && (
+              <>
+                <button
+                  onClick={() =>
+                    setImgIndex((i) =>
+                      i === 0 ? activeProp.galeria.length - 1 : i - 1
+                    )
+                  }
+                  className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 text-white rounded-full px-3 py-1 hover:bg-black transition"
+                >
+                  ❮
+                </button>
+                <button
+                  onClick={() =>
+                    setImgIndex((i) => (i + 1) % activeProp.galeria.length)
+                  }
+                  className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 text-white rounded-full px-3 py-1 hover:bg-black transition"
+                >
+                  ❯
+                </button>
+              </>
+            )}
+          </div>
+
+          {/* 🏡 Información de la propiedad */}
+          <div className="p-8 flex flex-col justify-center">
+            <h2 className="text-2xl font-bold text-white mb-2">
+              {activeProp.titulo[language] || activeProp.titulo.es}
+            </h2>
+            <p className="text-gray-400 mb-3">{activeProp.zona}</p>
+            <p className="text-gray-300 mb-5 leading-relaxed">
+              {activeProp.resumen[language] || activeProp.resumen.es}
+            </p>
+            <p className="text-teal-400 font-semibold text-xl mb-6">
+              {formatUSD(activeProp.precioUSD)}
+            </p>
+
+            <a
+              href={`https://wa.me/50688888888?text=${encodeURIComponent(
+                `Hola! Estoy interesado en ${activeProp.titulo[language] ||
+                  activeProp.titulo.es
+                } en ${activeProp.zona}. Presupuesto hasta ${formatUSD(
+                  activeProp.precioUSD
+                )}.`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2 bg-gradient-to-r from-teal-500 to-cyan-400 text-white rounded-full font-medium hover:shadow-teal-400/40 transition-all text-sm md:text-base active:scale-95"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                className="w-4 h-4"
               >
-                ✕
-              </button>
-              <div className="grid md:grid-cols-2">
-                <div className="relative">
-                  <img
-                    src={activeProp.galeria[imgIndex]}
-                    alt={activeProp.titulo[language] || activeProp.titulo.es}
-                    className="w-full h-[380px] md:h-[500px] object-cover"
-                  />
-                  {activeProp.galeria.length > 1 && (
-                    <>
-                      <button
-                        onClick={() =>
-                          setImgIndex((i) => (i === 0 ? activeProp.galeria.length - 1 : i - 1))
-                        }
-                        className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 text-white rounded-full px-3 py-1 hover:bg-black transition"
-                      >
-                        ❮
-                      </button>
-                      <button
-                        onClick={() => setImgIndex((i) => (i + 1) % activeProp.galeria.length)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 text-white rounded-full px-3 py-1 hover:bg-black transition"
-                      >
-                        ❯
-                      </button>
-                    </>
-                  )}
-                </div>
-                <div className="p-8 flex flex-col justify-center">
-                  <h2 className="text-2xl font-bold text-white mb-2">
-                    {activeProp.titulo[language] || activeProp.titulo.es}
-                  </h2>
-                  <p className="text-gray-400 mb-3">{activeProp.zona}</p>
-                  <p className="text-gray-300 mb-5 leading-relaxed">
-                    {activeProp.resumen[language] || activeProp.resumen.es}
-                  </p>
-                  <p className="text-teal-400 font-semibold text-xl mb-6">
-                    {formatUSD(activeProp.precioUSD)}
-                  </p>
-                  <a
-                    href={`https://wa.me/50688888888?text=${encodeURIComponent(
-                      `Hola! Estoy interesado en ${activeProp.titulo[language] || activeProp.titulo.es
-                      } en ${activeProp.zona}. Presupuesto hasta ${formatUSD(activeProp.precioUSD)}.`
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-5 py-2 bg-gradient-to-r from-teal-500 to-cyan-400 text-white rounded-full font-medium hover:shadow-teal-400/40 transition-all text-sm md:text-base active:scale-95"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                      className="w-4 h-4"
-                    >
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.67.15-.198.297-.768.966-.94 1.164-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.173.198-.297.298-.495.099-.198.05-.372-.025-.52-.075-.149-.669-1.611-.916-2.205-.242-.58-.487-.502-.67-.512l-.57-.01c-.198 0-.52.074-.793.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.078 4.487.709.306 1.262.489 1.693.625.711.227 1.357.195 1.868.118.57-.085 1.758-.718 2.006-1.41.248-.694.248-1.289.173-1.411-.074-.123-.272-.198-.57-.347zM12.04 2.002c-5.514 0-9.98 4.465-9.98 9.967 0 1.757.46 3.467 1.337 4.972L2 22l5.184-1.357c1.46.799 3.1 1.22 4.856 1.22 5.513 0 9.979-4.466 9.979-9.969 0-2.665-1.037-5.175-2.918-7.056A9.94 9.94 0 0 0 12.04 2.002z" />
-                    </svg>
-                    {textos.btnInfo}
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.67.15-.198.297-.768.966-.94 1.164-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.173.198-.297.298-.495.099-.198.05-.372-.025-.52-.075-.149-.669-1.611-.916-2.205-.242-.58-.487-.502-.67-.512l-.57-.01c-.198 0-.52.074-.793.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.078 4.487.709.306 1.262.489 1.693.625.711.227 1.357.195 1.868.118.57-.085 1.758-.718 2.006-1.41.248-.694.248-1.289.173-1.411-.074-.123-.272-.198-.57-.347zM12.04 2.002c-5.514 0-9.98 4.465-9.98 9.967 0 1.757.46 3.467 1.337 4.972L2 22l5.184-1.357c1.46.799 3.1 1.22 4.856 1.22 5.513 0 9.979-4.466 9.979-9.969 0-2.665-1.037-5.175-2.918-7.056A9.94 9.94 0 0 0 12.04 2.002z" />
+              </svg>
+              {textos.btnInfo}
+            </a>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
+
     </motion.section>
   );
 }

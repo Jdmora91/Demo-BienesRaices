@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X } from "lucide-react";
 
@@ -6,172 +6,238 @@ export default function ChatBox({ language = "es" }) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [typing, setTyping] = useState(false);
+  const [offsetY, setOffsetY] = useState(0);
 
-  // 🌍 Traducciones y personalidad de Ana
+  // Detecta el scroll para mover suavemente el botón
+  useEffect(() => {
+    const handleScroll = () => {
+      setOffsetY(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // 🌍 Traducciones base
   const translations = {
     es: {
       name: "Ana",
-      title: "Asistente Virtual Ana",
-      placeholder: "Escribe tu mensaje...",
+      title: "Ana – Asistente Virtual",
+      placeholder: "Escribe algo...",
       send: "Enviar",
       welcome:
-        "👋 ¡Hola! Soy Ana, tu asistente virtual de bienes raíces. ¿Te gustaría conocer propiedades, precios o información sobre la zona de Bahía Ballena y Osa?",
-      responses: {
-        saludo: "¡Hola! Soy Ana 😊 ¿Buscas una casa, terreno o negocio en la zona?",
-        propiedades: "Tenemos hermosas propiedades en Uvita, Ojochal y Dominical. ¿Deseas ver opciones frente al mar o en la montaña?",
-        zona: "Bahía Ballena es una zona increíble 🌴, famosa por el avistamiento de ballenas, playas vírgenes y una comunidad tranquila.",
-        contacto: "Puedo ponerte en contacto directo por WhatsApp con un agente local 📱.",
-        default: "Gracias por tu mensaje, pronto te responderemos 😊",
-      },
+        "👋 ¡Hola! Soy Ana, tu asistente virtual inmobiliaria. ¿Buscas una propiedad en Bahía Ballena, Uvita o Dominical?",
     },
     en: {
       name: "Ana",
-      title: "Virtual Assistant Ana",
-      placeholder: "Type your message...",
+      title: "Ana – Virtual Assistant",
+      placeholder: "Type something...",
       send: "Send",
       welcome:
-        "👋 Hi! I'm Ana, your virtual real estate assistant. Would you like to learn about properties or the Bahía Ballena & Osa area?",
-      responses: {
-        saludo: "Hi there! I'm Ana 😊 Are you looking for a home, land, or business property?",
-        propiedades: "We have beautiful listings in Uvita, Ojochal, and Dominical. Would you prefer ocean-view or mountain homes?",
-        zona: "Bahía Ballena is a stunning area 🌴, famous for whale watching, pristine beaches, and a peaceful lifestyle.",
-        contacto: "I can connect you directly with a local agent via WhatsApp 📱.",
-        default: "Thanks for your message! I’ll get back to you soon 😊",
-      },
+        "👋 Hi! I'm Ana, your real estate assistant. Looking for a property in Bahía Ballena, Uvita, or Dominical?",
     },
     fr: {
       name: "Ana",
-      title: "Assistante Virtuelle Ana",
-      placeholder: "Écrivez votre message...",
+      title: "Ana – Assistante Virtuelle",
+      placeholder: "Écrivez un message...",
       send: "Envoyer",
       welcome:
-        "👋 Bonjour ! Je suis Ana, votre assistante immobilière virtuelle. Souhaitez-vous connaître les propriétés ou la région de Bahía Ballena et Osa ?",
-      responses: {
-        saludo: "Bonjour ! Je suis Ana 😊 Vous cherchez une maison, un terrain ou un commerce ?",
-        propiedades: "Nous avons de magnifiques propriétés à Uvita, Ojochal et Dominical. Préférez-vous la mer ou la montagne ?",
-        zona: "Bahía Ballena est une région splendide 🌴, célèbre pour l’observation des baleines et ses plages naturelles.",
-        contacto: "Je peux vous mettre en contact avec un agent local via WhatsApp 📱.",
-        default: "Merci pour votre message, je vous répondrai bientôt 😊",
-      },
+        "👋 Bonjour ! Je suis Ana, votre assistante immobilière. Vous cherchez une propriété à Bahía Ballena, Uvita ou Dominical ?",
     },
     de: {
       name: "Ana",
-      title: "Virtuelle Assistentin Ana",
-      placeholder: "Schreibe deine Nachricht...",
+      title: "Ana – Virtuelle Assistentin",
+      placeholder: "Nachricht eingeben...",
       send: "Senden",
       welcome:
-        "👋 Hallo! Ich bin Ana, deine virtuelle Immobilienassistentin. Möchtest du mehr über Immobilien oder die Region Bahía Ballena & Osa erfahren?",
-      responses: {
-        saludo: "Hallo! Ich bin Ana 😊 Suchst du ein Haus, Grundstück oder Geschäft?",
-        propiedades: "Wir haben wunderschöne Immobilien in Uvita, Ojochal und Dominical. Bevorzugst du Meerblick oder Berglage?",
-        zona: "Bahía Ballena ist eine herrliche Gegend 🌴, bekannt für Wale, Strände und Ruhe.",
-        contacto: "Ich kann dich direkt mit einem lokalen Agenten über WhatsApp 📱 verbinden.",
-        default: "Danke für deine Nachricht, ich melde mich bald 😊",
-      },
+        "👋 Hallo! Ich bin Ana, deine Immobilienassistentin. Suchst du eine Immobilie in Bahía Ballena, Uvita oder Dominical?",
     },
     pt: {
       name: "Ana",
-      title: "Assistente Virtual Ana",
+      title: "Ana – Assistente Virtual",
       placeholder: "Digite sua mensagem...",
       send: "Enviar",
       welcome:
-        "👋 Olá! Eu sou Ana, sua assistente virtual imobiliária. Gostaria de saber sobre propriedades ou a região de Bahía Ballena e Osa?",
-      responses: {
-        saludo: "Olá! Sou Ana 😊 Você procura uma casa, terreno ou negócio?",
-        propiedades: "Temos belas propriedades em Uvita, Ojochal e Dominical. Prefere vista para o mar ou montanha?",
-        zona: "Bahía Ballena é uma região incrível 🌴, famosa pelas baleias e praias paradisíacas.",
-        contacto: "Posso te conectar com um agente local via WhatsApp 📱.",
-        default: "Obrigada pela mensagem! Em breve entraremos em contato 😊",
-      },
+        "👋 Olá! Eu sou Ana, sua assistente imobiliária virtual. Procura uma propriedade em Bahía Ballena, Uvita ou Dominical?",
     },
   };
 
   const t = translations[language] || translations.es;
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!message.trim()) return;
     const newMsg = { text: message, sender: "user" };
     setMessages([...messages, newMsg]);
     setMessage("");
+    setTyping(true);
 
-    const lower = message.toLowerCase();
-    let reply = t.responses.default;
+    try {
+      const res = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_OPENAI_KEY}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          messages: [
+            {
+              role: "system",
+              content: `
+              Eres Ana, una asistente virtual profesional de bienes raíces de Pura Vida Tech,
+              experta en Bahía Ballena, Uvita, Ojochal y Dominical.
+              Responde SIEMPRE en el idioma del usuario (${language}).
+              Sé amable, útil, clara y con tono humano.
+              `,
+            },
+            ...messages.map((m) => ({
+              role: m.sender === "user" ? "user" : "assistant",
+              content: m.text,
+            })),
+            { role: "user", content: message },
+          ],
+          temperature: 0.8,
+          max_tokens: 250,
+        }),
+      });
 
-    if (lower.includes("hola") || lower.includes("hi")) reply = t.responses.saludo;
-    else if (lower.includes("propiedad") || lower.includes("house") || lower.includes("home")) reply = t.responses.propiedades;
-    else if (lower.includes("zona") || lower.includes("area") || lower.includes("bahía") || lower.includes("region")) reply = t.responses.zona;
-    else if (lower.includes("contacto") || lower.includes("whatsapp") || lower.includes("agent")) reply = t.responses.contacto;
+      const data = await res.json();
+      const reply =
+        data.choices?.[0]?.message?.content?.trim() ||
+        "Lo siento, no pude responder en este momento.";
 
-    setTimeout(() => {
+      setTyping(false);
       setMessages((prev) => [...prev, { text: reply, sender: "bot" }]);
-    }, 700);
+    } catch {
+      setTyping(false);
+      setMessages((prev) => [
+        ...prev,
+        { text: "⚠️ Error de conexión. Inténtalo más tarde.", sender: "bot" },
+      ]);
+    }
   };
 
   return (
     <>
-      {/* BOTÓN FLOTANTE */}
+      {/* BOTÓN FLOTANTE ADAPTATIVO */}
       <motion.button
         onClick={() => setOpen(!open)}
+        style={{
+          transform: `translateY(${offsetY * 0.05}px)`, // movimiento suave
+        }}
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ type: "spring", stiffness: 120, damping: 14 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        className="fixed bottom-6 right-6 z-50 p-4 rounded-full bg-gradient-to-r from-teal-500 to-cyan-400 text-white shadow-lg hover:shadow-teal-400/40 transition-all"
+        className="
+          fixed 
+          right-5 sm:right-8 
+          bottom-20 sm:bottom-12 
+          z-[9999]
+          p-5 
+          rounded-full 
+          bg-gradient-to-r from-[#0ea5e9] via-[#14b8a6] to-[#06b6d4]
+          shadow-[0_0_25px_rgba(6,182,212,0.6)]
+          hover:shadow-[0_0_40px_rgba(6,182,212,0.8)]
+          transition-all duration-300 ease-out
+          overflow-hidden
+        "
       >
-        {open ? <X size={22} /> : <MessageCircle size={24} />}
+        {/* Halo animado */}
+        <motion.span
+          animate={{ scale: [1, 1.3, 1], opacity: [0.6, 0.3, 0.6] }}
+          transition={{ repeat: Infinity, duration: 3 }}
+          className="absolute inset-0 bg-cyan-400/40 blur-2xl rounded-full"
+        />
+        <div className="relative z-10 flex items-center justify-center text-white">
+          {open ? <X size={24} /> : <MessageCircle size={26} />}
+        </div>
       </motion.button>
 
-      {/* CHAT */}
+      {/* CHATBOX */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 40 }}
-            transition={{ duration: 0.3 }}
-            className="fixed bottom-20 right-6 w-80 md:w-96 bg-gray-950 border border-gray-800 rounded-2xl shadow-2xl overflow-hidden z-50 backdrop-blur-md"
+            exit={{ opacity: 0, y: 50 }}
+            transition={{ type: "spring", stiffness: 100, damping: 12 }}
+            className="
+              fixed 
+              right-4 sm:right-8 
+              bottom-36 sm:bottom-24 
+              w-[90%] sm:w-80 md:w-96
+              bg-gray-900/80 
+              backdrop-blur-xl 
+              border border-white/10 
+              rounded-3xl 
+              shadow-[0_8px_40px_rgba(0,0,0,0.4)]
+              overflow-hidden 
+              z-[9999]
+            "
           >
-            {/* Encabezado */}
-            <div className="bg-gradient-to-r from-teal-500 to-cyan-400 text-white px-4 py-3 flex justify-between items-center">
-              <h3 className="font-semibold">{t.title}</h3>
-              <button onClick={() => setOpen(false)} className="hover:text-gray-200">
+            <div className="bg-gradient-to-r from-teal-500 to-cyan-400 text-white px-5 py-3 flex justify-between items-center">
+              <h3 className="font-semibold tracking-wide text-sm md:text-base">
+                {t.title}
+              </h3>
+              <button onClick={() => setOpen(false)} className="hover:text-gray-200 text-lg">
                 ✕
               </button>
             </div>
 
-            {/* Mensajes */}
-            <div className="p-4 h-64 overflow-y-auto text-sm space-y-3">
-              <div className="text-gray-300 bg-gray-800/40 p-3 rounded-lg w-fit max-w-[90%]">
+            <div className="p-4 h-72 overflow-y-auto space-y-3">
+              <div className="text-gray-300 bg-gray-800/50 p-3 rounded-2xl w-fit max-w-[90%] shadow-sm border border-white/5">
                 {t.welcome}
               </div>
+
               {messages.map((msg, i) => (
                 <div key={i} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
-                  <div
-                    className={`px-3 py-2 rounded-xl max-w-[80%] ${
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`px-4 py-2.5 rounded-2xl max-w-[80%] text-sm shadow-md ${
                       msg.sender === "user"
                         ? "bg-gradient-to-r from-teal-500 to-cyan-400 text-white"
-                        : "bg-gray-800 text-gray-200"
+                        : "bg-gray-800/70 text-gray-200 border border-white/10"
                     }`}
                   >
                     {msg.text}
-                  </div>
+                  </motion.div>
                 </div>
               ))}
+
+              {typing && (
+                <div className="flex justify-start">
+                  <div className="bg-gray-800/60 rounded-full px-3 py-2 text-gray-400 flex items-center gap-1">
+                    {[0, 0.3, 0.6].map((d, i) => (
+                      <motion.span
+                        key={i}
+                        animate={{ opacity: [0.2, 1, 0.2] }}
+                        transition={{ repeat: Infinity, duration: 1, delay: d }}
+                        className="w-2 h-2 bg-gray-400 rounded-full"
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* Input */}
-            <div className="flex items-center border-t border-gray-800 p-3 bg-gray-900/70">
+            <div className="flex items-center gap-2 border-t border-white/10 p-3 bg-gray-900/60">
               <input
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder={t.placeholder}
                 onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                className="flex-1 px-3 py-2 bg-gray-800 text-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-400"
+                className="flex-1 px-4 py-2 bg-gray-800/80 text-gray-100 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 border border-white/10"
               />
-              <button
+              <motion.button
+                whileTap={{ scale: 0.9 }}
                 onClick={handleSend}
-                className="ml-2 px-4 py-2 bg-gradient-to-r from-teal-500 to-cyan-400 text-white rounded-lg text-sm font-medium hover:shadow-teal-400/30 transition-all"
+                className="px-4 py-2 bg-gradient-to-r from-teal-500 to-cyan-400 text-white rounded-full text-sm font-medium hover:shadow-[0_0_10px_rgba(0,255,255,0.3)] transition-all"
               >
                 {t.send}
-              </button>
+              </motion.button>
             </div>
           </motion.div>
         )}
