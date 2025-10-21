@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
-import hero from "../assets/ballena1.avif";
 
-// 📦 Importa todas las imágenes
+
+
 import uv0 from "../assets/propiedades/uvita/casaUv/casaUv.avif";
 import uv0_1 from "../assets/propiedades/uvita/casaUv/casaUv0_1.avif";
 import uv0_2 from "../assets/propiedades/uvita/casaUv/casaUv0_2.avif";
@@ -21,17 +21,15 @@ import dom2_3 from "../assets/propiedades/dominical/casaDom2/casaDom2_3.avif";
 import dom3 from "../assets/propiedades/dominical/casaDom3.avif";
 import dom4 from "../assets/propiedades/dominical/casaDom4.avif";
 
-// 💵 Formateador de precios
+
 const formatUSD = (n) =>
   new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
 
-// 🔎 Hook para leer parámetros URL
 function useQuery() {
   const { search } = useLocation();
   return useMemo(() => new URLSearchParams(search), [search]);
 }
 
-// 🏡 Datos base (solo una vez) — cada propiedad tiene idioma completo
 const propiedadesData = [
   {
     id: "Uv-00",
@@ -45,7 +43,7 @@ const propiedadesData = [
     },
     precioUSD: 480000,
     cover: uv0,
-    galeria: [uv0_1, uv0_2, uv0_3],
+    galeria: [uv0, uv0_1, uv0_2, uv0_3],
     resumen: {
       es: "Arquitectura tropical moderna a minutos del Parque Marino Ballena.",
       en: "Modern tropical architecture minutes from Marino Ballena National Park.",
@@ -192,7 +190,7 @@ const propiedadesData = [
     },
     precioUSD: 530000,
     cover: dom2_1,
-    galeria: [dom2_0, dom2_1, dom2_2, dom2_3],
+    galeria: [dom2_1, dom2_0, dom2_2, dom2_3],
     resumen: {
       es: "Vista al mar y ambientes surferos a minutos del centro.",
       en: "Ocean view and surf vibes just minutes from downtown.",
@@ -257,7 +255,7 @@ export default function Propiedades({ language }) {
   const textos = {
     es: {
       title: "Propiedades en Bahía Ballena",
-      subtitle: "Vive el lujo natural. Filtra por zona o precio y explora cada espacio.",
+      subtitle: "Explora, filtra y encuentra el lugar ideal. Vive el lujo natural.",
       zone: "Zona",
       all: "Todas",
       minPrice: "Precio mínimo (USD)",
@@ -265,11 +263,11 @@ export default function Propiedades({ language }) {
       placeholderMin: "Ej: 250000",
       placeholderMax: "Ej: 600000",
       noResults: "No hay propiedades en este rango.",
-      btnInfo: "Pedir información por WhatsApp",
+      btnInfo: "WhatsApp",
     },
     en: {
       title: "Properties in Bahía Ballena",
-      subtitle: "Experience natural luxury. Filter by area or price and explore each space.",
+      subtitle: "Explore, filter and find your ideal place. Experience natural luxury.",
       zone: "Area",
       all: "All",
       minPrice: "Minimum price (USD)",
@@ -277,7 +275,7 @@ export default function Propiedades({ language }) {
       placeholderMin: "Ex: 250000",
       placeholderMax: "Ex: 600000",
       noResults: "No properties found in this range.",
-      btnInfo: "Request information via WhatsApp",
+      btnInfo: "WhatsApp",
     },
     fr: {
       title: "Propriétés à Bahía Ballena",
@@ -289,7 +287,7 @@ export default function Propiedades({ language }) {
       placeholderMin: "Ex : 250000",
       placeholderMax: "Ex : 600000",
       noResults: "Aucune propriété dans cette gamme.",
-      btnInfo: "Demander des informations via WhatsApp",
+      btnInfo: "WhatsApp",
     },
     de: {
       title: "Immobilien in Bahía Ballena",
@@ -301,7 +299,7 @@ export default function Propiedades({ language }) {
       placeholderMin: "z. B.: 250000",
       placeholderMax: "z. B.: 600000",
       noResults: "Keine Immobilien in diesem Bereich gefunden.",
-      btnInfo: "Informationen über WhatsApp anfordern",
+      btnInfo: "WhatsApp",
     },
     pt: {
       title: "Propriedades em Bahía Ballena",
@@ -313,11 +311,10 @@ export default function Propiedades({ language }) {
       placeholderMin: "Ex: 250000",
       placeholderMax: "Ex: 600000",
       noResults: "Nenhuma propriedade neste intervalo.",
-      btnInfo: "Pedir informações via WhatsApp",
+      btnInfo: "WhatsApp",
     },
   }[language];
 
-  // 🎯 Filtrado
   const filtradas = useMemo(() => {
     const min = minPrice ? Number(minPrice) : 0;
     const max = maxPrice ? Number(maxPrice) : 999999999;
@@ -326,7 +323,6 @@ export default function Propiedades({ language }) {
     );
   }, [zona, minPrice, maxPrice, language]);
 
-  // 🔄 Modal
   const abrirModal = (prop) => {
     setActiveProp(prop);
     setImgIndex(0);
@@ -338,72 +334,74 @@ export default function Propiedades({ language }) {
   return (
     <motion.section
       id="propiedades"
-      className="bg-gradient-to-b from-gray-950 to-gray-900 text-gray-100"
+      className="bg-gradient-to-b from-gray-950 to-gray-900 text-gray-100 min-h-screen"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.5 }}
     >
-      {/* HERO */}
-      <div
-        className="relative h-[65vh] flex flex-col justify-center items-center bg-cover bg-center text-center"
-        style={{ backgroundImage: `url(${hero})` }}
+      {/* HERO MINIMALISTA */}
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        className="text-center py-16 md:py-20"
       >
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
-        <motion.div
-          className="relative z-10 max-w-3xl px-6"
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-teal-400 to-cyan-200 bg-clip-text text-transparent">
-            {textos.title}
-          </h1>
-          <p className="mt-3 text-lg text-gray-200">{textos.subtitle}</p>
-        </motion.div>
+        <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-teal-400 to-cyan-300 bg-clip-text text-transparent mb-4">
+          {textos.title}
+        </h1>
+        <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          {textos.subtitle}
+        </p>
+        <div className="w-20 h-[2px] bg-gradient-to-r from-teal-400 to-cyan-300 mx-auto mt-6 rounded-full" />
+      </motion.div>
+
+      {/* FILTROS CENTRALIZADOS */}
+      <div className="max-w-5xl mx-auto mb-16 px-6 py-8 bg-gray-900/60 backdrop-blur-md rounded-2xl shadow-lg border border-gray-800">
+        <h2 className="text-xl font-semibold text-white mb-6 text-center tracking-wide">
+          🔎 {language === "es" ? "Filtra tu búsqueda" : "Refine your search"}
+        </h2>
+        <div className="flex flex-col md:flex-row items-end gap-6">
+          {["zone", "minPrice", "maxPrice"].map((field, i) => (
+            <div key={i} className="flex-1">
+              {field === "zone" ? (
+                <>
+                  <label className="block text-sm font-medium mb-1 text-gray-400">{textos.zone}</label>
+                  <select
+                    value={zona}
+                    onChange={(e) => setZona(e.target.value)}
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-teal-400 outline-none"
+                  >
+                    <option value="Todas">{textos.all}</option>
+                    <option value="Uvita">Uvita</option>
+                    <option value="Ojochal">Ojochal</option>
+                    <option value="Dominical">Dominical</option>
+                  </select>
+                </>
+              ) : (
+                <>
+                  <label className="block text-sm font-medium mb-1 text-gray-400">
+                    {field === "minPrice" ? textos.minPrice : textos.maxPrice}
+                  </label>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    value={field === "minPrice" ? minPrice : maxPrice}
+                    onChange={(e) =>
+                      field === "minPrice"
+                        ? setMinPrice(e.target.value.replace(/\D/g, ""))
+                        : setMaxPrice(e.target.value.replace(/\D/g, ""))
+                    }
+                    placeholder={field === "minPrice" ? textos.placeholderMin : textos.placeholderMax}
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-teal-400 outline-none"
+                  />
+                </>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* FILTROS */}
-      <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-end gap-6">
-        {["zone", "minPrice", "maxPrice"].map((field, i) => (
-          <div key={i} className="flex-1">
-            {field === "zone" ? (
-              <>
-                <label className="block text-sm font-medium mb-1 text-gray-400">{textos.zone}</label>
-                <select
-                  value={zona}
-                  onChange={(e) => setZona(e.target.value)}
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-teal-400 outline-none"
-                >
-                  <option value="Todas">{textos.all}</option>
-                  <option value="Uvita">Uvita</option>
-                  <option value="Ojochal">Ojochal</option>
-                  <option value="Dominical">Dominical</option>
-                </select>
-              </>
-            ) : (
-              <>
-                <label className="block text-sm font-medium mb-1 text-gray-400">
-                  {field === "minPrice" ? textos.minPrice : textos.maxPrice}
-                </label>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  value={field === "minPrice" ? minPrice : maxPrice}
-                  onChange={(e) =>
-                    field === "minPrice"
-                      ? setMinPrice(e.target.value.replace(/\D/g, ""))
-                      : setMaxPrice(e.target.value.replace(/\D/g, ""))
-                  }
-                  placeholder={field === "minPrice" ? textos.placeholderMin : textos.placeholderMax}
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-teal-400 outline-none"
-                />
-              </>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* GRID */}
+      {/* GRID DE PROPIEDADES */}
       <div className="max-w-7xl mx-auto px-6 pb-24 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {filtradas.length ? (
           filtradas.map((p) => (
@@ -435,7 +433,7 @@ export default function Propiedades({ language }) {
         )}
       </div>
 
-      {/* MODAL */}
+      {/* MODAL (sin cambios visuales) */}
       <AnimatePresence>
         {open && activeProp && (
           <motion.div
@@ -452,11 +450,10 @@ export default function Propiedades({ language }) {
             >
               <button
                 onClick={() => setOpen(false)}
-                className="absolute top-4 right-4 bg-black/60 text-white rounded-full px-3 py-1 hover:bg-black transition"
+                className="absolute top-3 right-3 bg-black/70 text-white text-2xl rounded-full w-10 h-10 flex items-center justify-center hover:bg-black transition md:top-4 md:right-4"
               >
                 ✕
               </button>
-
               <div className="grid md:grid-cols-2">
                 <div className="relative">
                   <img
@@ -467,13 +464,15 @@ export default function Propiedades({ language }) {
                   {activeProp.galeria.length > 1 && (
                     <>
                       <button
-                        onClick={prevImg}
+                        onClick={() =>
+                          setImgIndex((i) => (i === 0 ? activeProp.galeria.length - 1 : i - 1))
+                        }
                         className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 text-white rounded-full px-3 py-1 hover:bg-black transition"
                       >
                         ❮
                       </button>
                       <button
-                        onClick={nextImg}
+                        onClick={() => setImgIndex((i) => (i + 1) % activeProp.galeria.length)}
                         className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 text-white rounded-full px-3 py-1 hover:bg-black transition"
                       >
                         ❯
@@ -481,7 +480,6 @@ export default function Propiedades({ language }) {
                     </>
                   )}
                 </div>
-
                 <div className="p-8 flex flex-col justify-center">
                   <h2 className="text-2xl font-bold text-white mb-2">
                     {activeProp.titulo[language] || activeProp.titulo.es}
@@ -499,8 +497,17 @@ export default function Propiedades({ language }) {
                       } en ${activeProp.zona}. Presupuesto hasta ${formatUSD(activeProp.precioUSD)}.`
                     )}`}
                     target="_blank"
-                    className="inline-block px-8 py-3 bg-gradient-to-r from-teal-500 to-cyan-400 text-white rounded-full font-semibold hover:shadow-teal-400/30 transition-all"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-2 bg-gradient-to-r from-teal-500 to-cyan-400 text-white rounded-full font-medium hover:shadow-teal-400/40 transition-all text-sm md:text-base active:scale-95"
                   >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                      className="w-4 h-4"
+                    >
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.67.15-.198.297-.768.966-.94 1.164-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.173.198-.297.298-.495.099-.198.05-.372-.025-.52-.075-.149-.669-1.611-.916-2.205-.242-.58-.487-.502-.67-.512l-.57-.01c-.198 0-.52.074-.793.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.078 4.487.709.306 1.262.489 1.693.625.711.227 1.357.195 1.868.118.57-.085 1.758-.718 2.006-1.41.248-.694.248-1.289.173-1.411-.074-.123-.272-.198-.57-.347zM12.04 2.002c-5.514 0-9.98 4.465-9.98 9.967 0 1.757.46 3.467 1.337 4.972L2 22l5.184-1.357c1.46.799 3.1 1.22 4.856 1.22 5.513 0 9.979-4.466 9.979-9.969 0-2.665-1.037-5.175-2.918-7.056A9.94 9.94 0 0 0 12.04 2.002z" />
+                    </svg>
                     {textos.btnInfo}
                   </a>
                 </div>

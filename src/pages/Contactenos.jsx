@@ -111,10 +111,9 @@ export default function Contactenos({ language }) {
   };
 
   return (
-    <section id="contacto" className="bg-white text-gray-800">
+    <section id="contacto" className="bg-gray-950 text-gray-800">
       <div
-        className="relative h-[70vh] flex flex-col justify-center items-center bg-cover bg-center text-center"
-        style={{ backgroundImage: `url(${ballena1})` }}
+        className="relative h-[30vh] flex flex-col justify-center items-center bg-cover bg-center text-center"
       >
         <div className="absolute inset-0 bg-black/50"></div>
         <motion.div
@@ -123,7 +122,7 @@ export default function Contactenos({ language }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <h1 className="text-5xl font-bold text-white drop-shadow-lg mb-4">
+          <h1 className="text-7xl font-bold text-white drop-shadow-lg mb-4">
             {t.title}
           </h1>
           <p className="text-gray-200 text-lg md:text-xl">{t.subtitle}</p>

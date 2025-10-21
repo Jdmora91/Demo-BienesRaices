@@ -5,7 +5,6 @@ import ballena1 from "../assets/ballena1.avif";
 import osa from "../assets/osa.avif";
 import nauyaca from "../assets/nauyaca.avif";
 import palm from "../assets/palm.avif";
-import palm1 from "../assets/palm1.avif";
 import playa from "../assets/playa.avif";
 import atar from "../assets/atar.avif";
 import atard from "../assets/atard.avif";
@@ -72,7 +71,6 @@ export default function Galeria({ language }) {
     { src: osa, alt: t.alt },
     { src: nauyaca, alt: t.alt },
     { src: palm, alt: t.alt },
-    { src: palm1, alt: t.alt },
     { src: playa, alt: t.alt },
     { src: atar, alt: t.alt },
     { src: atard, alt: t.alt },
@@ -119,69 +117,26 @@ export default function Galeria({ language }) {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      {/* HERO */}
-      <div
-        className="relative h-[70vh] flex flex-col justify-center items-center text-center bg-cover bg-center"
-        style={{ backgroundImage: `url(${ballena1})` }}
-      >
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px]" />
-        <motion.div
-          className="relative z-10 px-6"
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-teal-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-lg">
-            {t.title}
-          </h1>
-          <p className="text-gray-300 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-            {t.subtitle}
-          </p>
-        </motion.div>
-      </div>
-
-      {/* CARRUSEL */}
+      {/* HEADER */}
       <motion.div
-        className="relative max-w-7xl mx-auto px-6 py-20 overflow-hidden rounded-3xl shadow-2xl"
-        whileInView={{ opacity: 1 }}
-        initial={{ opacity: 0 }}
+        className="text-center py-20 md:py-12"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        <motion.div
-          className="flex"
-          animate={{ x: `-${currentIndex * 100}%` }}
-          transition={{ duration: 0.9, ease: "easeInOut" }}
-        >
-          {carrusel.map((img, i) => (
-            <img
-              key={i}
-              src={img}
-              alt={`${t.alt} ${i}`}
-              loading="lazy"
-              className="w-full h-[550px] object-cover flex-shrink-0 rounded-3xl"
-            />
-          ))}
-        </motion.div>
-
-        <button
-          onClick={() =>
-            setCurrentIndex((currentIndex - 1 + carrusel.length) % carrusel.length)
-          }
-          className="absolute top-1/2 left-5 -translate-y-1/2 bg-black/50 text-white p-4 rounded-full hover:bg-black transition"
-        >
-          ❮
-        </button>
-        <button
-          onClick={() => setCurrentIndex((currentIndex + 1) % carrusel.length)}
-          className="absolute top-1/2 right-5 -translate-y-1/2 bg-black/50 text-white p-4 rounded-full hover:bg-black transition"
-        >
-          ❯
-        </button>
+        <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-teal-400 to-cyan-300 bg-clip-text text-transparent mb-3">
+          {t.title}
+        </h1>
+        <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+          {t.subtitle}
+        </p>
+        <div className="w-24 h-[2px] bg-gradient-to-r from-teal-400 to-cyan-300 mx-auto mt-6 rounded-full animate-pulse" />
       </motion.div>
+
 
       {/* GALERÍA */}
       <motion.div
-        className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"
+        className="max-w-7xl mx-auto px-8 py-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.7 }}
@@ -191,13 +146,13 @@ export default function Galeria({ language }) {
             key={index}
             whileHover={{ scale: 1.05 }}
             onClick={() => handleOpen(index)}
-            className="cursor-pointer relative overflow-hidden rounded-2xl group"
+            className="cursor-pointer relative overflow-hidden rounded-3xl group"
           >
             <img
               src={img.src}
               alt={img.alt}
               loading="lazy"
-              className="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110"
+              className="w-full h-40 object-cover transition-transform duration-700 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center">
               <p className="text-sm text-white font-semibold mb-3 drop-shadow-lg">

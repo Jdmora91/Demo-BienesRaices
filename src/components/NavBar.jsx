@@ -74,8 +74,8 @@ export default function NavBar({ language, setLanguage }) {
 
   const navItems = [
     { name: t.home, path: "/" },
-    { name: t.zones, path: "/zonas" },
     { name: t.properties, path: "/propiedades" },
+    { name: t.zones, path: "/zonas" },
     { name: t.gallery, path: "/galeria" },
     { name: t.contact, path: "/contactenos" },
   ];

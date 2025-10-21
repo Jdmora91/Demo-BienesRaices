@@ -9,7 +9,7 @@ import Propiedades from "./pages/Propiedades";
 import Galeria from "./pages/Galeria";
 import PageTransition from "./components/PageTransition";
 import Contactenos from "./pages/Contactenos";
-import LanguageToggle from "./components/LanguageToggle";
+import ChatBox from "./components/ChatBox"; // ✅ Importar el chat de Ana
 
 export default function App() {
   const location = useLocation();
@@ -17,7 +17,10 @@ export default function App() {
 
   return (
     <div className="font-sans bg-white text-gray-800 overflow-x-hidden">
+      {/* 🔝 Navbar */}
       <Navbar language={language} setLanguage={setLanguage} />
+
+      {/* 🌍 Contenido principal con animación entre páginas */}
       <main className="pt-20">
         <AnimatePresence mode="wait">
           <PageTransition key={location.pathname}>
@@ -31,7 +34,12 @@ export default function App() {
           </PageTransition>
         </AnimatePresence>
       </main>
+
+      {/* ⚡ Footer */}
       <Footer language={language} />
+
+      {/* 💬 Asistente Virtual “Ana” */}
+      <ChatBox language={language} />
     </div>
   );
 }

@@ -125,7 +125,7 @@ export default function Home({ language }) {
     });
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % fondos.length);
-    }, 4000);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
@@ -136,7 +136,7 @@ export default function Home({ language }) {
         <AnimatePresence>
           <motion.div
             key={index}
-            className="absolute inset-0 bg-cover bg-center scale-105"
+            className="absolute inset-0 bg-cover bg-center scale-100"
             style={{ backgroundImage: `url(${fondos[index]})` }}
             initial={{ opacity: 0, scale: 1.1 }}
             animate={{ opacity: 1, scale: 1 }}

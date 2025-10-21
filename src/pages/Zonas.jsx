@@ -162,8 +162,7 @@ export default function Zonas({ language }) {
     <section id="zonas" className="bg-gray-950 text-white overflow-hidden">
       {/* HERO */}
       <div
-        className="relative h-[80vh] flex flex-col justify-center items-center bg-cover bg-center"
-        style={{ backgroundImage: `url(${ballena1})` }}
+        className="relative h-[20vh] flex flex-col justify-center items-center bg-cover bg-center"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-transparent"></div>
         <motion.div
@@ -172,7 +171,7 @@ export default function Zonas({ language }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-cyan-200 drop-shadow-lg">
+          <h1 className="text-8xl md:text-7xl font-extrabold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-cyan-200 drop-shadow-lg">
             {t.heroTitle}
           </h1>
           <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
